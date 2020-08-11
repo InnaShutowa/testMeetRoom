@@ -57,39 +57,63 @@
 
     <body>
         <div style="text-align: center; padding-top: 5%;">
-            <form:form method="POST" action="${pageContext.request.contextPath}/createEvent" modelAttribute="eventForm">
-                <h2>Создать событие</h2>
+            <c:choose>
+            <c:when test="${isCreate}">
+                <form:form method="POST" action="${pageContext.request.contextPath}/createEvent" modelAttribute="eventForm">
+                    <h2>Создать событие</h2>
 
-                <div style="text-align: center; padding-left: 30%; padding-right: 30%;">
-                    <div style="padding: 5px;">
-                        <form:input class="form-control" type="text" path="event_name" placeholder="Название события"
-                               autofocus="true"/>
+                    <div style="text-align: center; padding-left: 30%; padding-right: 30%;">
+                        <div style="padding: 5px;">
+                            <form:input class="form-control" type="text" path="event_name" placeholder="Название события"
+                                   autofocus="true"/>
+                        </div>
+                        <div style="padding: 5px;">
+                            <form:input path="start_date" class="form-control" type="datetime-local" placeholder="Дата начала события"/>
+                        </div>
+                        <div style="padding: 5px;">
+                            <form:input path="finish_date" class="form-control" type="datetime-local" placeholder="Дата окончания события"/>
+                        </div>
+                        <div style="padding: 5px;">
+                            <form:input path="description" class="form-control" type="text" placeholder="Описание события"/>
+                        </div>
                     </div>
-                    <div style="padding: 5px;">
-                        <form:input path="start_date" class="form-control" type="datetime-local" placeholder="Дата начала события"/>
-                    </div>
-                    <div style="padding: 5px;">
-                        <form:input path="finish_date" class="form-control" type="datetime-local" placeholder="Дата окончания события"/>
-                    </div>
-                    <div style="padding: 5px;">
-                        <form:input path="description" class="form-control" type="text" placeholder="Описание события"/>
-                    </div>
-                </div>
 
+                    <label>Участники: </label>
+                    <form:select cssStyle="min-width: 20%;" path="users" id="example-multiple-selected" multiple="multiple">
+                        <form:option value="NONE" label="..." />
+                        <form:options items="${userList}" />
+                    </form:select>
 
-                <c:choose>
-                    <c:when test="${isCreate}">
-                        <label>Участники: </label>
-                        <form:select cssStyle="min-width: 20%;" path="users" id="example-multiple-selected" multiple="multiple">
-                            <form:option value="NONE" label="..." />
-                            <form:options items="${userList}" />
-                        </form:select>
-                    </c:when>
-                </c:choose>
+                    <br>
+                    <button class="btn btn-warning" type="submit">Сохранить</button>
+                </form:form>
+            </c:when>
 
-                <br>
-                <button class="btn btn-success" type="submit">Сохранить</button>
-            </form:form>
+            <c:otherwise>
+                <form:form method="POST" action="${pageContext.request.contextPath}/editEvent?event_id=${event_id}" modelAttribute="eventForm">
+                    <h2>Редактировать событие</h2>
+
+                    <div style="text-align: center; padding-left: 30%; padding-right: 30%;">
+                        <div style="padding: 5px;">
+                            <form:input class="form-control" type="text" path="event_name" placeholder="Название события"
+                                        autofocus="true"/>
+                        </div>
+                        <div style="padding: 5px;">
+                            <form:input path="start_date" class="form-control" type="datetime-local" placeholder="Дата начала события"/>
+                        </div>
+                        <div style="padding: 5px;">
+                            <form:input path="finish_date" class="form-control" type="datetime-local" placeholder="Дата окончания события"/>
+                        </div>
+                        <div style="padding: 5px;">
+                            <form:input path="description" class="form-control" type="text" placeholder="Описание события"/>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn btn-warning" type="submit">Сохранить</button>
+                </form:form>
+            </c:otherwise>
+
+            </c:choose>
 
             <p>${error}</p>
         </div>

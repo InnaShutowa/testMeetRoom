@@ -36,7 +36,9 @@ public class InternalCreateEventManager {
     public EventCreateResultModel CreateEventByParams(String eventName,
                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime finishDate,
-                                                      String description) {
+                                                      String description,
+                                                      Boolean isEdit,
+                                                      Integer eventId) {
 
         if (startDate == null
                 || finishDate == null
@@ -55,9 +57,13 @@ public class InternalCreateEventManager {
             return new EventCreateResultModel("Время уже занято");
         }
 
-        events newEvent = this.CreateNewEvent(eventName, startDate, finishDate, description);
-
-        return new EventCreateResultModel(newEvent);
+        if(isEdit) {
+            Boolean result = this.EditEvent(eventId, eventName, startDate, finishDate, description);
+            return new EventCreateResultModel(result);
+        } else{
+            events newEvent = this.CreateNewEvent(eventName, startDate, finishDate, description);
+            return new EventCreateResultModel(newEvent);
+        }
     }
 
     public void CreateUsersForEvent(events event, List<String> users) {
@@ -86,6 +92,26 @@ public class InternalCreateEventManager {
         user2EventService.CreateUser2Event(usr);
     }
 
+    private Boolean EditEvent(Integer eventId,
+                              String eventName,
+                              LocalDateTime startDate,
+                              LocalDateTime finishDate,
+                              String description) {
+        try{
+            Integer startHour = 0;
+            Integer finishHour = 0;
+
+            if (startDate.getMinute() > 0) startHour = startDate.getHour()+1;
+            else startHour = startDate.getHour();
+            if (finishDate.getMinute() > 0) finishHour = finishDate.getHour()+1;
+            else finishHour = finishDate.getHour();
+
+            eventService.updateEventInfo(eventId, eventName, startDate, finishDate, startHour, finishHour, description);
+            return true;
+        } catch (Exception ex){
+            return false;
+        }
+    }
     private events CreateNewEvent(String eventName,
                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime finishDate,

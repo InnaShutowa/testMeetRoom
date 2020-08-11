@@ -81,7 +81,9 @@
             <form:options items="${rolesList}" />
         </form:select>
 
-        <button class="btn btn-success" type="submit">Создать</button>
+        <p>
+            <button class="btn btn-warning" type="submit">Создать</button>
+        </p>
     </form:form>
 
     <p>${error}</p>

@@ -39,4 +39,17 @@ public class EventService {
     public events getOne(Integer id) { return eventsRepository.getOne(id); }
     public events getEventByDates(LocalDateTime date_first, LocalDateTime date_second) { return eventsRepository.getEventByDates(date_first, date_second); }
 
+    public void updateEventInfo(Integer event_id,
+                                String event_name,
+                                LocalDateTime start,
+                                LocalDateTime finish,
+                                Integer start_hours,
+                                Integer finish_hours,
+                                String description) { eventsRepository.updateEventInfo(event_id,
+                                                        event_name,
+                                                        start,
+                                                        finish,
+                                                        start_hours,
+                                                        finish_hours,
+                                                        description); }
 }

@@ -10,6 +10,7 @@ public class EventCreateResultModel {
 
     public EventCreateResultModel() {}
 
+    public EventCreateResultModel(Boolean result) { this.Result = result; }
     public EventCreateResultModel(events event) {
         this.Event = event;
         this.Result = true;

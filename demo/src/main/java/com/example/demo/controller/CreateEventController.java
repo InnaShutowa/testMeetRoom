@@ -79,15 +79,15 @@ public class CreateEventController {
         EventCreateResultModel res = manager.CreateEventByParams(eventForm.getEvent_name(),
                 eventForm.getStart_date(),
                 eventForm.getFinish_date(),
-                eventForm.getDescription());
+                eventForm.getDescription(),
+                false,
+                -1);
 
         if (!res.getResult()) {
             model.addAttribute("error", res.getError());
             this.AddAttributes(model);
             return "createEvent";
         }
-
-
 
         manager.CreateUsersForEvent(res.getEvent(), eventForm.getUsers());
         List<events> events = eventService.findAll();

@@ -1,0 +1,19 @@
+CREATE TABLE public."User2Event"
+(
+    "UserId" integer NOT NULL,
+    "EventId" integer NOT NULL,
+    CONSTRAINT "User2Event_pkey" PRIMARY KEY ("UserId", "EventId"),
+    CONSTRAINT "users2Event_events_fk" FOREIGN KEY ("EventId")
+        REFERENCES public."Events" ("EventId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT "users2Event_users_fk" FOREIGN KEY ("UserId")
+        REFERENCES public."Users" ("UserId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."User2Event"
+    OWNER to postgres;

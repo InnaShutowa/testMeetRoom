@@ -1,0 +1,16 @@
+CREATE TABLE public."AuthData"
+(
+    "UserId" integer NOT NULL,
+    "Login" text COLLATE pg_catalog."default",
+    "PassHash" text COLLATE pg_catalog."default",
+    CONSTRAINT "authData_users_fk" FOREIGN KEY ("UserId")
+        REFERENCES public."Users" ("UserId") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."AuthData"
+    OWNER to postgres;

@@ -1,0 +1,13 @@
+CREATE TABLE public."Users"
+(
+    "UserId" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "FirstName" text COLLATE pg_catalog."default" NOT NULL,
+    "LastName" text COLLATE pg_catalog."default" NOT NULL,
+    "Email" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Users_pkey" PRIMARY KEY ("UserId")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Users"
+    OWNER to postgres;

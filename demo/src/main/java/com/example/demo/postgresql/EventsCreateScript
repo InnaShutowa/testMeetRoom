@@ -1,0 +1,13 @@
+CREATE TABLE public."Events"
+(
+    "EventId" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "EventName" text COLLATE pg_catalog."default" NOT NULL,
+    "StartDate" timestamp with time zone,
+    "FinishDate" timestamp with time zone,
+    CONSTRAINT "Events_pkey" PRIMARY KEY ("EventId")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Events"
+    OWNER to postgres;
